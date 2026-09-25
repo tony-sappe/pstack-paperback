@@ -1,22 +1,22 @@
 # Make it yours
 
-poteto-mode is one person's style. The machinery underneath, playbooks, routing, model roles, works just as well wearing yours. This page covers generating a personal mode, capturing lessons from a session, authoring a focused skill, and testing a skill change before you trust it.
+poteto-mode is one person's style. You can adapt its playbooks and write project skills for your own workflow. This page covers Codex and Grok Build workflows.
 
-## Generate your own mode with `/automate-me`
-
-```text
-/automate-me
-```
-
-You don't describe your style, because [`/automate-me`](../../plugins/pstack/skills/automate-me/SKILL.md) reads it out of your history. It mines your recent transcripts in the active workspace for repeated preferences, in how you like replies, delegation, verification, code, prose, and process, then asks you which patterns are really you. It drafts `.cursor/skills/<your-name>-mode/SKILL.md` through Cursor's built-in `create-skill` flow, runs the draft through [`/unslop`](../../plugins/pstack/skills/unslop/SKILL.md), and opens a PR from a worktree so you review it like any other change.
-
-Run it again whenever your habits drift:
+## Build your own mode
 
 ```text
-/automate-me update my mode skill with everything since its last edit
+Write a project skill that captures my recurring engineering preferences from the examples I provide. Show the proposed rules and the evidence for each before editing files.
 ```
 
-Update mode mines only the history since the skill last changed. It keeps rules you haven't contradicted, revises the ones with new evidence, and adds sections only for genuinely new patterns.
+Give the agent concrete examples or task history the host exposes. Write the result under `.agents/skills/` for Codex or `.grok/skills/` for Grok Build, following the host's skill-authoring guidance. Review each proposed rule against evidence before adopting it.
+
+When your habits change, ask for a focused update:
+
+```text
+Update my mode skill using the new examples in this task. Keep rules that still have evidence and show me the diff.
+```
+
+Do not infer preferences from private history the host has not exposed.
 
 ## Capture a session's lessons with `/reflect`
 
@@ -26,7 +26,7 @@ Right after a task that taught you something, run:
 /reflect that took way too long. capture what we learned so the next run doesn't repeat it.
 ```
 
-[`/reflect`](../../plugins/pstack/skills/reflect/SKILL.md) sends the transcript to three parallel reviewers, then a synthesizer sorts the proposals into `Accepted`, `Rejected`, and `Backlog` and waits for your approval before any skill changes. Approve a proposal only if it would change a future decision. One weird session is an anecdote, not a rule.
+[`/reflect`](../../plugins/pstack/skills/reflect/SKILL.md) uses the current task or accessible task history, then reviews proposed lessons. It should label evidence it cannot access and avoid turning one unusual session into a permanent rule.
 
 ## Author a focused skill
 
@@ -36,7 +36,7 @@ When you already know the workflow you want to capture:
 /poteto-mode write a skill for verifying database migrations in this repo
 ```
 
-Writing a skill matches the [Authoring or modifying a skill playbook](../../plugins/pstack/skills/poteto-mode/playbooks/authoring-a-skill.md), which routes through Cursor's built-in `create-skill`, validates the frontmatter and links, and ships the result through the Opening a PR playbook. Agent-facing prose has a higher bar than human prose, because an unhelpful sentence becomes an instruction some future agent follows. Let the playbook hold that bar rather than writing a `SKILL.md` freehand.
+Writing a skill matches the [Authoring or modifying a skill playbook](../../plugins/pstack/skills/poteto-mode/playbooks/authoring-a-skill.md). Use the current host's skill-authoring guidance, validate frontmatter and links, and test behavior when the change is structural. Agent-facing prose has a higher bar than human prose because an unhelpful sentence becomes an instruction some future agent follows.
 
 One special case has its own generator. A skill that must drive your app and prove behavior is a verification skill, so use [`/create-verification-skill`](../../plugins/pstack/skills/create-verification-skill/SKILL.md) and [`/maintain-verification-skill`](../../plugins/pstack/skills/maintain-verification-skill/SKILL.md) instead. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers both.
 
@@ -58,7 +58,7 @@ A skill edit affects every future session, so test it like the experiment it is:
 /poteto-mode run the eval playbook on this skill change. same task for both variants, candidates stay blind.
 ```
 
-The [Eval playbook](../../plugins/pstack/skills/poteto-mode/playbooks/eval.md) is built around one failure mode, the observer effect. An agent that knows it's being evaluated behaves differently. So candidate agents get an organic-looking task in sanitized directories, never the words "eval" or "candidate", and never each other's existence. One judge scores all outputs under neutral labels, and chain-following gets graded from which files each candidate actually read, not from what it claims.
+The [Eval playbook](../../plugins/pstack/skills/poteto-mode/playbooks/eval.md) gives candidates an organic task in separate sanitized directories and scores the results under neutral labels. Native delegation and model diversity depend on the host. Chain-following is graded from transcripts only when the host exposes those candidate records; otherwise the report marks that criterion inconclusive and judges observable behavior.
 
 Read every output yourself before accepting the verdict. If you disagree with the judge, suspect the rubric before you suspect your judgment.
 

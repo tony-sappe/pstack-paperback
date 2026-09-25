@@ -42,13 +42,13 @@ When a bug has a cheap local test path, the whole prompt can be two words:
 
 In context, that's enough. [`/tdd`](../../plugins/pstack/skills/tdd/SKILL.md) writes the smallest test that fails for the intended reason, then the fix, then reruns the test. If a test would need broad harness setup or brittle mocks, the skill says so and uses the closest executable check instead. Don't force a test where a real command is stronger evidence.
 
-## Let the TypeScript rules load themselves
+## Apply the TypeScript rules
 
-[`typescript-best-practices`](../../plugins/pstack/skills/typescript-best-practices/SKILL.md) has no slash command in your workflow. It loads whenever the agent touches a `.ts` or `.tsx` file and turns the type-system principles into concrete rules: discriminated unions, `unknown` at boundaries, exhaustive variants, schema-derived types.
+Invoke [`typescript-best-practices`](../../plugins/pstack/skills/typescript-best-practices/SKILL.md) when working in `.ts` or `.tsx` files, or ask the agent to apply it. The skill turns type-system principles into concrete rules: discriminated unions, `unknown` at boundaries, exhaustive variants, and schema-derived types. This package does not install a file hook that guarantees automatic loading.
 
 ## Clean before you commit
 
-The [Opening a PR playbook](../../plugins/pstack/skills/poteto-mode/playbooks/opening-a-pr.md) runs `/deslop` on the diff before each commit and applies [`/unslop`](../../plugins/pstack/skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` ships in the `cursor-team-kit` plugin, not in pstack. If you don't have it, ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
+The [Opening a PR playbook](../../plugins/pstack/skills/poteto-mode/playbooks/opening-a-pr.md) reviews the diff before each commit and applies [`/unslop`](../../plugins/pstack/skills/unslop/SKILL.md) to the PR description and commit bodies. The same diff review removes narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
 
 For prose, `/unslop` takes a target and any extra rules you have:
 
@@ -66,10 +66,10 @@ Comments need their own pass, and not from the agent that wrote them. An author 
 /no-comments the diff
 ```
 
-[`/no-comments`](../../plugins/pstack/skills/no-comments/SKILL.md) spawns [Comment Sicko](../../plugins/pstack/agents/comment-sicko.md), a read-only reviewer with a short keep list: license headers, doc comments on a public API, links that explain what code can't, behavior forced by an external dependency you can't reshape. Everything else goes. A surprise in your own code gets no such pass. The comment comes back as a refactor flag, and `/no-comments` fixes the flags it accepts at the root cause. When a comment claims a constraint, "do not remove", the skill offers to encode the claim as a type, test, or lint. Either way, the comment comes out.
+[`/no-comments`](../../plugins/pstack/skills/no-comments/SKILL.md) uses [Comment Sicko](../../plugins/pstack/agents/comment-sicko.md) as its review prompt. Grok Build can load the bundled agent; Codex can pass that prompt to a native subagent. When no subagent is available, the skill performs a self-review and labels it accordingly. A constraint comment such as "do not remove" leads to an offer to encode the claim as a type, test, or lint.
 
-The division of labor is worth keeping straight. `/deslop` cleans slop out of the code, `/unslop` cleans it out of prose, and `/no-comments` hands the comments to a reviewer who didn't write them.
+The division of labor is worth keeping straight. Diff review removes dead code, `/unslop` cleans prose, and `/no-comments` hands comments to a reviewer who did not write them.
 
-**Pitfall:** cleanup is not optional polish. A diff with narrating comments and defensive dead weight reads as unfinished to reviewers, and the extra code is where the next bug hides. If the diff feels padded, say `deslop it` before you commit, not after review calls it out.
+**Pitfall:** cleanup is not optional polish. A diff with narrating comments and defensive dead weight reads as unfinished to reviewers, and the extra code is where the next bug hides. If the diff feels padded, clean it before you commit.
 
 Next: [Verify and ship](./06-verify-and-ship.md).

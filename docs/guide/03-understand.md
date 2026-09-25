@@ -36,7 +36,7 @@ The two compose naturally. `do why first then how` is a perfectly good prompt wh
 /recall catch me up on the export work from last week
 ```
 
-[`/recall`](../../plugins/pstack/skills/recall/SKILL.md) mines your own recent chats plus the shared record (issues, prior fixes, errors still firing) and hands back a brief on where things stand and what's next. Use it when you're returning to a topic cold. If you want to resume one specific chat, that's the Session pickup playbook below, not `/recall`.
+[`/recall`](../../plugins/pstack/skills/recall/SKILL.md) uses only task history the host exposes or that you provide, plus the shared record (issues, prior fixes, errors still firing). It hands back a brief on where things stand and what's next. If prior task history is unavailable, it says so and reconstructs only from the current task and repository. If you want to resume one specific chat, that's the Session pickup playbook below.
 
 ## Take over prior work with Session pickup
 

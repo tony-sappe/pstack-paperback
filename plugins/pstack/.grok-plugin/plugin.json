@@ -2,7 +2,7 @@
   "name": "pstack",
   "version": "0.15.5",
   "description": "Rigorous, verifiable engineering workflows for coding agents.",
-  "author": "Lauren Tan",
+  "author": "pstack-paperback contributors",
   "homepage": "https://github.com/tony-sappe/pstack-paperback",
   "license": "MIT"
 }

@@ -19,13 +19,14 @@ Add the marketplace and install the plugin:
 ```bash
 grok plugin marketplace add tony-sappe/pstack-paperback
 grok plugin install pstack --trust
+grok plugin enable pstack
 ```
 
 Grok plugins need trust before their skills load. Review the plugin source before granting it. For a local checkout, run `grok plugin marketplace add .` from the repository root.
 
 ## Choose your model
 
-The former `/setup-pstack` workflow writes Cursor-only model rules and is not a Codex or Grok configuration command. Choose models and reasoning settings in your host's own settings. The skill workflows use available host capabilities and may delegate when the host supports it.
+Choose models and reasoning settings in your host's own settings. The skill workflows use available host capabilities and may delegate when the host supports it.
 
 ## Run your first task
 
