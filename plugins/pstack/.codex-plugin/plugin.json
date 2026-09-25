@@ -1,0 +1,23 @@
+{
+  "name": "pstack",
+  "version": "0.15.5",
+  "description": "Rigorous, verifiable engineering workflows for coding agents.",
+  "author": {
+    "name": "pstack-paperback contributors"
+  },
+  "homepage": "https://github.com/tony-sappe/pstack-paperback",
+  "repository": "https://github.com/tony-sappe/pstack-paperback",
+  "license": "MIT",
+  "keywords": ["engineering", "workflow", "skills", "verification"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pstack",
+    "shortDescription": "Engineering workflows for coding agents",
+    "longDescription": "Reusable playbooks for disciplined investigation, implementation, and verification.",
+    "developerName": "pstack-paperback contributors",
+    "category": "Productivity",
+    "capabilities": ["Skills"],
+    "defaultPrompt": ["Use pstack to investigate, implement, and verify this task."],
+    "logo": "./assets/logo.png"
+  }
+}

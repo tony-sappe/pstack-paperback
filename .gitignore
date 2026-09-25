@@ -1,3 +1,16 @@
 node_modules/
-.DS_Store
 *.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.pem
+*.key
+.idea/
+.vscode/
+*.swp
+*~
+.venv/
+__pycache__/
+*.pyc
+.python-version

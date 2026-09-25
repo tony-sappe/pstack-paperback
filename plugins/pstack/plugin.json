@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pstack",
+  "version": "0.15.5",
+  "description": "Rigorous, verifiable engineering workflows for coding agents.",
+  "author": {
+    "name": "pstack-paperback contributors"
+  },
+  "homepage": "https://github.com/tony-sappe/pstack-paperback",
+  "repository": "https://github.com/tony-sappe/pstack-paperback",
+  "license": "MIT",
+  "keywords": ["engineering", "workflow", "skills", "agents", "verification"]
+}

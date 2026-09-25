@@ -1,49 +1,40 @@
 # Set up pstack
 
-In this page you install the plugin, pick which models pstack uses, and run your first task. Setup is one command plus a short conversation.
+Install the pstack plugin for Codex or Grok Build, then use the host's model and permission settings. The plugin packages reusable skills; it does not set a preferred model or change host configuration.
 
-## Install the plugin
+## Install in Codex
 
-In a Cursor chat, run:
+Add this repository as a marketplace:
 
-```text
-/add-plugin pstack
+```bash
+codex plugin marketplace add tony-sappe/pstack-paperback
 ```
 
-Cursor confirms the plugin is installed.
+Install **pstack** from the Plugins directory in the Codex app. To use a local checkout during development, run `codex plugin marketplace add .` from the repository root.
 
-## Pick your models
+## Install in Grok Build
 
-Run:
+Add the marketplace and install the plugin:
 
-```text
-/setup-pstack
+```bash
+grok plugin marketplace add tony-sappe/pstack-paperback
+grok plugin install pstack --trust
 ```
 
-[`/setup-pstack`](../../skills/setup-pstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `~/.cursor/rules/pstack-models.mdc`, a small rule every pstack skill reads.
+Grok plugins need trust before their skills load. Review the plugin source before granting it. For a local checkout, run `grok plugin marketplace add .` from the repository root.
 
-You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default, delete that role's line. A rerun of `/setup-pstack` keeps any role whose model differs from the default. A rule written before 0.15.3 pins the old default models, so delete those role lines, or delete the file, then run `/setup-pstack` again.
+## Choose your model
 
-You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm.
-
-## Accept the verification offer, or don't
-
-At the end of setup, `/setup-pstack` looks for a way to prove app behavior in your project, either a `verify-*` skill or an existing harness. If it finds neither, it offers once to generate one with [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md).
-
-Say yes and it writes `.cursor/skills/verify-<app>/`, a project-local skill that teaches agents to drive your app the way a user does. It proves the skill works once before handing it over. Say no and setup moves on. You can run `/create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers when it earns its place.
-
-After setup, start a new chat. The model rule applies to new sessions.
+The former `/setup-pstack` workflow writes Cursor-only model rules and is not a Codex or Grok configuration command. Choose models and reasoning settings in your host's own settings. The skill workflows use available host capabilities and may delegate when the host supports it.
 
 ## Run your first task
 
-Pick something real but small, and describe it the way you'd describe it to a colleague:
+Use pstack's main router with a real, checkable outcome:
 
 ```text
 /poteto-mode add a --json flag to this command. text output stays byte-identical. verify both.
 ```
 
-Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/poteto-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.
+In Codex, invoke the plugin skill as `$pstack:poteto-mode` and give it the same request. The router selects the Feature playbook and uses the other skills when their steps apply.
 
-From here you can type normal follow-ups. `/poteto-mode` is sticky. It stays on for the conversation until you opt out by saying so.
-
-Next: [Route work through `/poteto-mode`](./02-poteto-mode.md).
+Next: [Route work through `poteto-mode`](./02-poteto-mode.md).
