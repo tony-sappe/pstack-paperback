@@ -1,6 +1,7 @@
 ---
 name: reflect
 description: Review an engineering session for durable lessons and propose focused skill changes. Use when the user says reflect or asks to capture lessons from the current work.
+disable-model-invocation: true
 ---
 
 # Reflect

@@ -1,6 +1,7 @@
 ---
 name: arena
 description: "Spawn N parallel candidates at the same task, pick a base, graft the strongest parts of the losers into it. Use for /arena, 'arena this', 'throw it in the arena', or when one attempt at a non-trivial artifact would lock in the wrong shape."
+disable-model-invocation: true
 ---
 
 # Arena
@@ -9,7 +10,7 @@ Fan out N parallel attempts at the same task. Read every candidate end to end. P
 
 ## Start
 
-Open a todolist with one entry per phase before launching anything.
+Open a task list with one entry per phase before launching anything.
 
 1. Frame
 2. Fan out

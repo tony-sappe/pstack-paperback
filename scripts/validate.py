@@ -83,6 +83,11 @@ def validate():
         frontmatter = match.group(1)
         check(bool(re.search(rf"^name:\s*['\"]?{re.escape(path.parent.name)}['\"]?\s*$", frontmatter, re.M)), f"{path.relative_to(ROOT)}: name differs from directory", errors)
         check(bool(re.search(r"^description:\s*\S", frontmatter, re.M)), f"{path.relative_to(ROOT)}: missing description", errors)
+        check(
+            bool(re.search(r"^disable-model-invocation:\s*true\s*$", frontmatter, re.M)),
+            f"{path.relative_to(ROOT)}: skills stay explicit (disable-model-invocation)",
+            errors,
+        )
 
     for path in sorted((PLUGIN / "agents").glob("*.md")):
         contents = path.read_text()
@@ -92,7 +97,13 @@ def validate():
             check(bool(re.search(rf"^name:\s*{re.escape(path.stem)}\s*$", match.group(1), re.M)), f"{path.relative_to(ROOT)}: agent name differs from filename", errors)
 
     docs_to_check = [ROOT / "README.md", *ROOT.glob("docs/guide/*.md"), *PLUGIN.rglob("*.md")]
-    legacy_pattern = re.compile(r"\.cursor/|cursor-team-kit|\bAskQuestion\b|/loop\b|/goal\b|\bBugbot\b|\bAutopilot-(?:full|stack)\b|playbooks/(?:orchestrate|multi-phase-plan|shipping)\.md|cursor-only/|automations/benny", re.I)
+    legacy_pattern = re.compile(
+        r"\.cursor/|cursor-team-kit|\bAskQuestion\b|/loop\b|/goal\b|\bBugbot\b|"
+        r"\bAutopilot-(?:full|stack)\b|playbooks/(?:orchestrate|multi-phase-plan|shipping)\.md|"
+        r"cursor-only/|automations/benny|\borigin pr\b|Cloud-agent|generalPurpose|"
+        r"grok-4\.\d+-xhigh|is_background|\btodolist\b",
+        re.I,
+    )
     link_pattern = re.compile(r"\]\(([^)]+)\)")
     for source in docs_to_check:
         contents = source.read_text()

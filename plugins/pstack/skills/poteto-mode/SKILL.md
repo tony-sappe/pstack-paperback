@@ -1,6 +1,7 @@
 ---
 name: poteto-mode
 description: poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Use for poteto, /poteto-mode, or requests to work in this style.
+disable-model-invocation: true
 ---
 
 # Poteto mode
@@ -87,9 +88,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
-Use the host's native subagent interface when delegation is available and authorized. Grok Build can discover bundled agent files. In Codex, pass the relevant agent prompt as task context if useful. If delegation is unavailable, run the step directly and report that it was not independently reviewed.
-
-Choose from models actually available in the current host. Inherit the parent model when no role-specific choice is configured. Keep each delegate's scope and output path explicit.
+Delegate with the mechanism in [host compatibility](../../HOST-COMPATIBILITY.md). Inherit the parent model. Keep each delegate's scope and output path explicit. If this session cannot delegate, or you are already a subagent on a host that does not nest, do the step yourself and say the independent pass did not happen.
 
 You own every subagent's work. Review the diff and write your own summary, don't pass through what it said. Interrupt-chained resumes silently drop directives, so fire a fresh subagent with consolidated scope rather than trusting a "done" summary. A second opinion is the same prompt against a different model. Agreement is high-signal.
 
@@ -133,5 +132,5 @@ A large or cross-cutting effort, or work the user steps away from to trust later
 - **Autonomous run.** A long task to drive to completion without stopping ("run until done"). `playbooks/autonomous-run.md`.
 - **Session pickup.** Resuming or taking over prior work from an accessible task record, user-provided export, or pushed branch. `playbooks/session-pickup.md`.
 - **Pause safely.** Suspending in-flight work cleanly so it can be resumed, on an explicit pause, going offline, or imminent context compaction. The complement to Session pickup. Full steps: `playbooks/pause-safely.md`.
-- **Worktree and simulator cleanup.** Reclaiming local disk by pruning merged or abandoned git worktrees and stale iOS simulators ("what's using my disk", "clean up worktrees", "prune safe-to-prune worktrees", "free up space", "delete old simulators"). `playbooks/worktree-cleanup.md`.
+- **Worktree and simulator cleanup.** Reclaiming local disk by pruning merged or abandoned git worktrees, and stale iOS simulators when the user asked for that too ("what's using my disk", "clean up worktrees", "prune safe-to-prune worktrees", "free up space", "delete old simulators"). `playbooks/worktree-cleanup.md`.
 - **Opening a PR.** Invoked after a code or skill change when a PR is requested or needed for delivery. `playbooks/opening-a-pr.md`.
